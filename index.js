@@ -35,7 +35,14 @@ MongoClient.connect(url, function (err, database) {
   // GET /students/id => retrieves one student with id
   app.get('/students/:id', (req, res) => {
     const id = req.params.id
-    res.send(`GET /students/id ${id} #TODO\n`)
+    db.collection('students')
+      .findOne({ "_id": ObjectId(id) }, (err, student_doc) => {
+        if (err) {
+          res.send(err)
+        } else {
+          res.send(student_doc)
+        }
+      })
   })
 
   // POST /students { name: "Petter", age: 17 } => saves the student in db
