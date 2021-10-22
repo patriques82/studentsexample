@@ -1,5 +1,6 @@
 const express = require("express")
 const MongoClient = require('mongodb').MongoClient;
+const ObjectId = require('mongodb').ObjectId;
 
 const dbName = 'stundentsexample';
 const url = `mongodb://localhost:27017/${dbName}`;
@@ -46,7 +47,15 @@ MongoClient.connect(url, function (err, database) {
   // DELETE /students/id => deletes student with id
   app.delete('/students/:id', (req, res) => {
     const id = req.params.id
-    res.send(`DELETE /students/id ${id} #TODO\n`)
+    console.log("id", id)
+    db.collection('students')
+      .deleteOne({ "_id": ObjectId(id) }, (err, obj) => {
+        if (err) {
+          res.send(err)
+        } else {
+          res.send(`successful deletion of ${obj.deletedCount} documents`)
+        }
+      })
   })
 
   app.listen(port, () => {
