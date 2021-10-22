@@ -40,7 +40,14 @@ MongoClient.connect(url, function (err, database) {
   // POST /students { name: "Petter", age: 17 } => saves the student in db
   app.post('/students', (req, res) => {
     const { name, age } = req.body
-    res.send(`POST /students ${id} #TODO\n`)
+    db.collection('students')
+      .insertOne({ name, age }, (err, obj) => {
+        if (err) {
+          res.send(err)
+        } else {
+          res.send(`succeful insert of object ${obj.insertedId}`)
+        }
+      })
   })
 
   // DELETE /students/id => deletes student with id
