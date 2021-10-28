@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js",
+    "production": "PORT=80 node index.js",
+    "develop": "PORT=3000 nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Patrik Nygren",
