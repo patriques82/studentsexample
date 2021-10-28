@@ -1,6 +1,5 @@
-const express = require("express")
-const MongoClient = require('mongodb').MongoClient;
-const ObjectId = require('mongodb').ObjectId;
+import express from "express"
+import { MongoClient, ObjectId } from "mongodb"
 
 const dbName = 'stundentsexample';
 const url = `mongodb://localhost:27017/${dbName}`;
