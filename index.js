@@ -6,14 +6,15 @@ const dbConf = {
   connectionUrl: `mongodb://localhost:27017/stundentsexample`
 }
 
-const port = process.env.PORT; // 3000 (development) or 80 (production)
+const port = process.env.PORT; // 3000 or 80
+const dbType = process.env.DB; // development or production
 
 const main = async (port, dbConf) => {
   try {
-    const db = await createDb(dbConf);
+    const db = await createDb(dbConf, dbType);
     const app = await createApp(db)
     app.listen(port, () => {
-      console.log(`Students app listening at http://localhost:${port}`)
+      console.log(`Students app (${dbType}) listening at http://localhost:${port}`)
     })
   } catch (err) {
     console.error("Error running app", err)

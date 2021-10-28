@@ -1,6 +1,4 @@
 import express from "express"
-import { ObjectId } from "mongodb"
-
 
 const createApp = async (db) => {
     const app = express()
@@ -9,7 +7,7 @@ const createApp = async (db) => {
 
     app.get('/students', async (req, res) => {
         try {
-            const students = await db.collection('students').find({}).toArray()
+            const students = await db.getAll()
             res.send(students)
         } catch (err) {
             console.error("Error GET /students", err)
@@ -18,11 +16,10 @@ const createApp = async (db) => {
         }
     })
 
-    // GET /students/id => retrieves one student with id
     app.get('/students/:id', async (req, res) => {
         const id = req.params.id
         try {
-            const student = await db.collection('students').findOne({ "_id": ObjectId(id) })
+            const student = await db.getOne(id)
             res.send(student)
         } catch (err) {
             console.error("Error GET /students/id", err)
@@ -30,11 +27,10 @@ const createApp = async (db) => {
         }
     })
 
-    // POST /students { name: "Petter", age: 17 } => saves the student in db
     app.post('/students', async (req, res) => {
         const { name, age } = req.body
         try {
-            await db.collection('students').insertOne({ name, age })
+            await db.createOne({ name, age })
             res.status(201).send("created")
         } catch (err) {
             console.error("Error POST /students", err)
@@ -42,11 +38,10 @@ const createApp = async (db) => {
         }
     })
 
-    // DELETE /students/id => deletes student with id
     app.delete('/students/:id', async (req, res) => {
         const id = req.params.id
         try {
-            await db.collection('students').deleteOne({ "_id": ObjectId(id) })
+            await db.deleteOne(id)
             res.status(204).send("deleted")
         } catch (err) {
             console.error("Error POST /students", err)
