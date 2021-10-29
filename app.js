@@ -1,5 +1,7 @@
 import express from "express"
 
+const SERVER_ERROR = "Server Error"
+
 const createApp = async (db) => {
     const app = express()
     app.use(express.urlencoded({ extended: true }));
@@ -11,7 +13,7 @@ const createApp = async (db) => {
             res.send(students)
         } catch (err) {
             console.error("Error GET /students", err)
-            res.status(501).send("server error")
+            res.status(501).send(SERVER_ERROR)
         }
     })
 
@@ -22,7 +24,7 @@ const createApp = async (db) => {
             res.send(student)
         } catch (err) {
             console.error("Error GET /students/id", err)
-            res.status(501).send("server error")
+            res.status(501).send(SERVER_ERROR)
         }
     })
 
@@ -30,10 +32,10 @@ const createApp = async (db) => {
         const { name, age } = req.body
         try {
             await db.createOne({ name, age })
-            res.status(201).send("created")
+            res.status(201).send({ created: true })
         } catch (err) {
             console.error("Error POST /students", err)
-            res.status(501).send("server error")
+            res.status(501).send(SERVER_ERROR)
         }
     })
 
@@ -41,10 +43,10 @@ const createApp = async (db) => {
         const id = req.params.id
         try {
             await db.deleteOne(id)
-            res.status(204).send("deleted")
+            res.status(200).send({ deleted: true })
         } catch (err) {
             console.error("Error POST /students", err)
-            res.status(501).send("server error")
+            res.status(501).send(SERVER_ERROR)
         }
     })
 

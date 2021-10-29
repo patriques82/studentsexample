@@ -17,7 +17,6 @@ const createMongoDb = async (connectionUrl, dbName) => {
 }
 
 const createMockDb = (mockData) => {
-    console.log("Connecting to mock database");
     return new MockCRUD(mockData)
 }
 
