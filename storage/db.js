@@ -9,23 +9,30 @@ const mockData = [
     {name: "Per", age: 57},
 ]
 
+const createMongoDb = async (connectionUrl, dbName) => {
+    const client = await MongoClient.connect(connectionUrl)
+    const db = client.db(dbName);
+    console.log("Connected successfully with MongoDb", connectionUrl, dbName)
+    return new MongoCRUD(db, "students");
+}
+
+const createMockDb = (mockData) => {
+    console.log("Connecting to mock database");
+    return new MockCRUD(mockData)
+}
+
 const createDb = async (dbConf, dbType) => {
     switch(dbType) {
         case "mongo":
             try {
-                const client = await MongoClient.connect(dbConf.connectionUrl)
-                const db = client.db(dbConf.name);
-                console.log("Connected successfully to MongoDB");
-                return new MongoCRUD(db, "students");
+                return createMongoDb(dbConf.connectionUrl, dbConf.name)
             } catch (error) {
                 console.error("MongoDB Connection error");
                 throw error;
             }
         default:
-            console.log("Connecting to mock database");
-            return new MockCRUD(mockData)
+            return createMockDb(mockData)
     }
-    
 }
 
-export default createDb
+export { createDb as default, createMongoDb, createMockDb }
