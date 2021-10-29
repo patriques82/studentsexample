@@ -1,5 +1,6 @@
 import { MongoClient } from "mongodb"
-import { MongoCRUD, MockCRUD } from "./storage/index.js";
+import { MongoCRUD } from "./mongocrud.js";
+import { MockCRUD } from "./mockcrud.js";
 
 const mockData = [
     {_id: 1, name: "Patrik", age: 38},

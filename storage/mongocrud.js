@@ -1,6 +1,4 @@
-import DbCRUD from "./dbcrud.js";
-
-class MongoCRUD extends DbCRUD {
+class MongoCRUD {
     constructor(db, collection) {
         super()
         this.db = db;

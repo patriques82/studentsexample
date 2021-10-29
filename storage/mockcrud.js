@@ -1,6 +1,4 @@
-import DbCRUD from "./dbcrud.js";
-
-class MockCRUD extends DbCRUD {
+class MockCRUD {
     constructor(data) {
         super()
         this.data = data;

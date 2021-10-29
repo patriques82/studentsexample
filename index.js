@@ -7,7 +7,7 @@ const dbConf = {
 }
 
 const port = process.env.PORT; // 3000 or 80
-const dbType = process.env.DB; // development or production
+const dbType = process.env.DB; // mock or mongodb
 
 const main = async (port, dbConf) => {
   try {
