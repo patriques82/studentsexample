@@ -11,8 +11,7 @@ const createApp = async (db) => {
             res.send(students)
         } catch (err) {
             console.error("Error GET /students", err)
-            res.statusCode = 501
-            res.send("server error")
+            res.status(501).send("server error")
         }
     })
 

@@ -1,6 +1,5 @@
 class MongoCRUD {
     constructor(db, collection) {
-        super()
         this.db = db;
         this.collection = collection;
     }

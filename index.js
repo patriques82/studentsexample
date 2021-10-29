@@ -1,4 +1,4 @@
-import createDb from "./db.js"
+import createDb from "./storage/db.js"
 import createApp from "./app.js"
 
 const dbConf = {
@@ -7,7 +7,7 @@ const dbConf = {
 }
 
 const port = process.env.PORT; // 3000 or 80
-const dbType = process.env.DB; // mock or mongodb
+const dbType = process.env.DB; // mock or mongo
 
 const main = async (port, dbConf) => {
   try {

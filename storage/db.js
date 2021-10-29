@@ -3,10 +3,10 @@ import { MongoCRUD } from "./mongocrud.js";
 import { MockCRUD } from "./mockcrud.js";
 
 const mockData = [
-    {_id: 1, name: "Patrik", age: 38},
-    {_id: 2, name: "Petter", age: 41},
-    {_id: 3, name: "Pontus", age: 12},
-    {_id: 4, name: "Per", age: 57},
+    {name: "Patrik", age: 38},
+    {name: "Petter", age: 41},
+    {name: "Pontus", age: 12},
+    {name: "Per", age: 57},
 ]
 
 const createDb = async (dbConf, dbType) => {
@@ -22,6 +22,7 @@ const createDb = async (dbConf, dbType) => {
                 throw error;
             }
         default:
+            console.log("Connecting to mock database");
             return new MockCRUD(mockData)
     }
     
