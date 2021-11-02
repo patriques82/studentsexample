@@ -1,7 +1,9 @@
 import createDb from "./storage/db.js"
 import createApp from "./app.js"
+import environment from "custom-env"
 
 // Config
+// environment.env('prod')
 const APP_ENV = process.env.APP_ENV || "dev"
 const PORT = process.env.PORT || 3000
 const DB_TYPE = process.env.DB_TYPE || "mock"

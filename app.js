@@ -23,7 +23,7 @@ const createApp = async (db) => {
             const student = await db.getOne(id)
             res.send(student)
         } catch (err) {
-            console.error("Error GET /students/id", err)
+            console.error(`Error GET /students/${id}`, err)
             res.status(501).send(SERVER_ERROR)
         }
     })
@@ -45,7 +45,7 @@ const createApp = async (db) => {
             await db.deleteOne(id)
             res.status(200).send({ deleted: true })
         } catch (err) {
-            console.error("Error POST /students", err)
+            console.error(`Error DELETE /students/${id}`, err)
             res.status(501).send(SERVER_ERROR)
         }
     })
