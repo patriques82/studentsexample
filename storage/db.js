@@ -22,15 +22,16 @@ const createMockDb = (mockData) => {
 
 const createDb = async (dbConf, dbType) => {
     switch(dbType) {
+        case "mock":
+            return createMockDb(mockData)
         case "mongo":
+        default:
             try {
                 return createMongoDb(dbConf.connectionUrl, dbConf.name)
             } catch (error) {
                 console.error("MongoDB Connection error");
                 throw error;
             }
-        default:
-            return createMockDb(mockData)
     }
 }
 

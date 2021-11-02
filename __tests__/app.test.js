@@ -16,7 +16,7 @@ describe('/students endpoints', () => {
         const res = await request(app).get('/students')
         expect(res.statusCode).toBe(200)
         expect(res.body).toEqual(expect.arrayContaining([
-            {_id: 0, name: "Patrik", age: 38},
+            {_id: 7, name: "Patrik", age: 38},
             {_id: 1, name: "Petter", age: 41},
             {_id: 2, name: "Pontus", age: 12},
             {_id: 3, name: "Per", age: 57}
