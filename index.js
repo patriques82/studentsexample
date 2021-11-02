@@ -3,7 +3,7 @@ import createApp from "./app.js"
 
 const dbConf = {
   name: 'stundentsexample',
-  connectionUrl: `mongodb://localhost:27017/stundentsexample`
+  connectionUrl: `mongodb+srv://patrik:123456qwerty@studentsexample.hkn0m.mongodb.net/studentsexample?retryWrites=true&w=majority`
 }
 
 const port = process.env.PORT; // 3000 or 80

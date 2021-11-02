@@ -1,12 +1,12 @@
 class MongoCRUD {
     constructor(db, collection) {
         this.db = db;
-        this.collection = collection;
+        this.collection = this.db.collection(collection)
     }
 
     async getAll() {
         try {
-            return await this.db.collection(this.collection).find({}).toArray()
+            return await this.collection.find({}).toArray()
         } catch(err) {
             throw new Error(`Error ${this.collection}.getAll`, err);
         }
@@ -14,7 +14,7 @@ class MongoCRUD {
 
     async getOne(id) {
         try {
-            return await db.collection(this.collection).findOne({ "_id": ObjectId(id) })
+            return await this.collection.findOne({ "_id": ObjectId(id) })
         } catch(err) {
             throw new Error(`Error ${this.collection}.getOne with id: ${id}`, err);
         }
@@ -22,7 +22,8 @@ class MongoCRUD {
 
     async createOne(data) {
         try {
-            await db.collection(this.collection).insertOne(data)
+            console.log(data)
+            await this.collection.insertOne(data)
         } catch(err) {
             throw new Error(`Error ${this.collection}.createOne with data: ${data}`, err);
         }
@@ -30,7 +31,7 @@ class MongoCRUD {
 
     async deleteOne(id) {
         try {
-            await db.collection(this.collection).deleteOne({ "_id": ObjectId(id) })
+            await this.collection.deleteOne({ "_id": ObjectId(id) })
         } catch(err) {
             throw new Error(`Error ${this.collection}.deleteOne with id: ${id}`, err);
         }
