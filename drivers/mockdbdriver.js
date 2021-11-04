@@ -1,4 +1,4 @@
-import { validateStudent } from "../usecases/studentuc.js"
+import { validateStudent } from "../usecases/validatestudent.js"
 import Student from "../entities/student"
 
 const mockData = [

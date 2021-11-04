@@ -1,7 +1,7 @@
-import { validateStudent } from "../usecases/studentuc.js"
+import { validateStudent } from "../usecases/validatestudent.js"
 import { EmptyObjectError, InvalidEmailError, InvalidNameError, InvalidAgeError } from "../entities/errors.js"
 
-describe('studentuc', () => {
+describe('validateStudent', () => {
     it('should validate return valid student data', async () => {
         const validStudent = { email: "valid@email.com", name: "validstudentname", age: 100 }
         const student = validateStudent(validStudent)

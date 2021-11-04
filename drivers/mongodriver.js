@@ -1,5 +1,5 @@
 import { MongoClient } from "mongodb"
-import { validateStudent } from "../usecases/studentuc.js"
+import { validateStudent } from "../usecases/validatestudent.js"
 import { studentIdMongoAdapter, mongoToStudentAdapter } from "../adapters/studentadapter.js"
 
 class MongoCRUD {
