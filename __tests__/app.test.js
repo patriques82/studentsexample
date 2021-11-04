@@ -1,13 +1,6 @@
 import request from "supertest"
 import webDriver from "../drivers/webdriver"
-import { createMockDb } from "../drivers/mockdbdriver"
-
-const mockData = [
-    {name: "Patrik", age: 38},
-    {name: "Petter", age: 41},
-    {name: "Pontus", age: 12},
-    {name: "Per", age: 57},
-]
+import { mockData, createMockDb } from "../drivers/mockdbdriver"
 
 describe('/students endpoints', () => {
     it('GET /students should get 4 students', async () => {
@@ -16,10 +9,10 @@ describe('/students endpoints', () => {
         const res = await request(app).get('/students')
         expect(res.statusCode).toBe(200)
         expect(res.body).toEqual(expect.arrayContaining([
-            {_id: 0, name: "Patrik", age: 38},
-            {_id: 1, name: "Petter", age: 41},
-            {_id: 2, name: "Pontus", age: 12},
-            {_id: 3, name: "Per", age: 57}
+            { _id: 0, email: "patrik@email.com", name: "Patrik", age: 38 },
+            { _id: 1, email: "petter@email.com", name: "Petter", age: 41 },
+            { _id: 2, email: "pontus@email.com", name: "Pontus", age: 12 },
+            { _id: 3, email: "per@email.com", name: "Per", age: 57 }
         ]));
     })
 
@@ -28,7 +21,7 @@ describe('/students endpoints', () => {
         const app = await webDriver(mockDb)
         const res = await request(app).get('/students/3')
         expect(res.statusCode).toBe(200)
-        expect(res.body).toMatchObject({ _id: 3, name: "Per", age: 57})
+        expect(res.body).toMatchObject({ _id: 3, email: "per@email.com", name: "Per", age: 57 })
     })
 
     it('POST /students should create 1 student', async () => {
@@ -36,7 +29,7 @@ describe('/students endpoints', () => {
         const app = await webDriver(mockDb)
         const res = await request(app)
             .post('/students')
-            .send({ name: "Penny", age: 32 })
+            .send({ email: "peggy@email.com", name: "Peggy", age: 32 })
         expect(res.statusCode).toBe(201)
         expect(res.body).toMatchObject({ created: true })
     })

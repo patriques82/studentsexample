@@ -1,8 +1,10 @@
+import { validateStudent } from "../usecases/studentuc.js"
+
 const mockData = [
-    {name: "Patrik", age: 38},
-    {name: "Petter", age: 41},
-    {name: "Pontus", age: 12},
-    {name: "Per", age: 57},
+    { email: "patrik@email.com", name: "Patrik", age: 38 },
+    { email: "petter@email.com",name: "Petter", age: 41 },
+    { email: "pontus@email.com",name: "Pontus", age: 12 },
+    { email: "per@email.com",name: "Per", age: 57 },
 ]
 
 class MockCRUD {
@@ -20,8 +22,13 @@ class MockCRUD {
     }
 
     async createOne(data) {
-        const _id = this.data.length + this.deleted
-        this.data.push({ _id, ...data })
+        try {
+            const validData = validateStudent(data);
+            const _id = this.data.length + this.deleted
+            this.data.push({ _id, ...validData })
+        } catch(err) {
+            throw err;
+        }
     }
 
     async deleteOne(id) {
@@ -35,7 +42,7 @@ const createMockDb = (mockData) => {
 }
 
 const mockdbDriver = () => {
-    return createMockDb(mockdata);
+    return createMockDb(mockData);
 }
 
-export { mockdbDriver, createMockDb };
+export { mockData, mockdbDriver, createMockDb };

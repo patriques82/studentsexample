@@ -1,6 +1,8 @@
 import express from "express";
+import { EmptyObjectError, InvalidEmailError, InvalidNameError, InvalidAgeError } from "../entities/errors.js"
 
 const SERVER_ERROR = "Server Error"
+const BAD_REQUEST = "Bad Request"
 
 const expressDriver = (db) => {
     const app = express()
@@ -29,13 +31,22 @@ const expressDriver = (db) => {
     })
 
     app.post('/students', async (req, res) => {
-        const { name, age } = req.body
         try {
-            await db.createOne({ name, age })
+            await db.createOne(req.body)
             res.status(201).send({ created: true })
         } catch (err) {
-            console.error("Error POST /students", err)
-            res.status(501).send(SERVER_ERROR)
+            if (err instanceof EmptyObjectError) {
+                res.status(400).send(BAD_REQUEST)
+            } else if (err instanceof InvalidEmailError) {
+                res.status(400).send(BAD_REQUEST)
+            } else if (err instanceof InvalidNameError) {
+                res.status(400).send(BAD_REQUEST)
+            } else if (err instanceof InvalidAgeError) {
+                res.status(400).send(BAD_REQUEST)
+            } else {
+                console.error("Error POST /students", err)
+                res.status(501).send(SERVER_ERROR)
+            }
         }
     })
 

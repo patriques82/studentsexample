@@ -1,11 +1,11 @@
-import mongoDriver from "./drivers/mongodriver"
-import mockdbDriver from "./drivers/mockdbdriver"
-import webDriver from "./drivers/webdriver"
+import { mongoDriver } from "./drivers/mongodriver.js"
+import { mockdbDriver } from "./drivers/mockdbdriver.js"
+import webDriver from "./drivers/webdriver.js"
 
-const dbName = process.env.DBNAME || "<default>";
-const dbConn = process.env.DBCONN || "<default>";
-const port = process.env.PORT || 3000; // 3000 or 80
-const dbType = process.env.DB || "mock"; // mock or mongo
+const DBNAME = process.env.DBNAME || "<default>";
+const DBCONN = process.env.DBCONN || "<default>";
+const PORT = process.env.PORT || 3000; // 3000 or 80
+const DBTYPE = process.env.DB || "mock"; // mock or mongo
 
 const selectDb = async (dbType, dbConn, dbName) => {
   switch (dbType) {
@@ -19,7 +19,7 @@ const selectDb = async (dbType, dbConn, dbName) => {
 
 const main = async (port, dbType, dbConn, dbName) => {
   try {
-    const db = await selectDb(dbConn, dbType, dbName); // mockdb or mongo
+    const db = await selectDb(dbType, dbConn, dbName);
     const app = await webDriver(db)
     app.listen(port, () => {
       console.log(`Students app (${dbType}) listening at http://localhost:${port}`)
@@ -29,4 +29,4 @@ const main = async (port, dbType, dbConn, dbName) => {
   }
 }
 
-main(port, dbType, dbConn, dbName);
+main(PORT, DBTYPE, DBCONN, DBNAME);

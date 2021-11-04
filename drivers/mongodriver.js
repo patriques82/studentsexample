@@ -1,4 +1,6 @@
 import { MongoClient } from "mongodb"
+import { validateStudent } from "../usecases/studentuc.js"
+import { studentMongoAdapter, studentIdMongoAdapter } from "../adapters/studentadapter.js"
 
 class MongoCRUD {
     constructor(db, collection) {
@@ -10,36 +12,38 @@ class MongoCRUD {
         try {
             return await this.collection.find({}).toArray()
         } catch(err) {
-            throw new Error(`Error ${this.collection}.getAll`, err);
+            throw new Error(`${this.collection}.getAll`, err);
         }
     };
 
     async getOne(id) {
         try {
-            return await this.collection.findOne({ "_id": ObjectId(id) })
+            const mongoId = studentIdMongoAdapter(id);
+            return await this.collection.findOne(mongoId)
         } catch(err) {
-            throw new Error(`Error ${this.collection}.getOne with id: ${id}`, err);
+            throw new Error(`${this.collection}.getOne with id: ${id}`, err);
         }
     }
 
     async createOne(data) {
         try {
-            console.log(data)
-            await this.collection.insertOne(data)
+            const validData = validateStudent(data);
+            const mongoData = studentMongoAdapter(validData)
+            await this.collection.insertOne(mongoData)
         } catch(err) {
-            throw new Error(`Error ${this.collection}.createOne with data: ${data}`, err);
+            throw new Error(`${this.collection}.createOne`, err);
         }
     }
 
     async deleteOne(id) {
         try {
-            await this.collection.deleteOne({ "_id": ObjectId(id) })
+            const mongoId = studentIdMongoAdapter(id);
+            await this.collection.deleteOne(mongoId)
         } catch(err) {
-            throw new Error(`Error ${this.collection}.deleteOne with id: ${id}`, err);
+            throw new Error(`${this.collection}.deleteOne with id: ${id}`, err);
         }
     }
 }
-
 
 const createMongoDb = async (conn, name) => {
     const client = await MongoClient.connect(conn)
