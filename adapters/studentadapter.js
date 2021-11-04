@@ -1,11 +1,12 @@
 import { ObjectId } from "mongodb";
-
-const studentMongoAdapter = (student) => {
-    return student; // pretend to adapt to mongo format
-}
+import Student from "../entities/student.js";
 
 const studentIdMongoAdapter = (id) => {
     return { "_id": ObjectId(id) };
 }
 
-export { studentMongoAdapter, studentIdMongoAdapter } 
+const mongoToStudentAdapter = ({ _id, email, name, age }) => {
+    return new Student(_id, email, name, age)
+}
+
+export { studentToMongoAdapter, studentIdMongoAdapter, mongoToStudentAdapter } 

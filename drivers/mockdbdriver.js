@@ -1,15 +1,18 @@
 import { validateStudent } from "../usecases/studentuc.js"
+import Student from "../entities/student"
 
 const mockData = [
-    { email: "patrik@email.com", name: "Patrik", age: 38 },
-    { email: "petter@email.com",name: "Petter", age: 41 },
-    { email: "pontus@email.com",name: "Pontus", age: 12 },
-    { email: "per@email.com",name: "Per", age: 57 },
+    { id: 0, email: "patrik@email.com", name: "Patrik", age: 38 },
+    { id: 1, email: "petter@email.com", name: "Petter", age: 41 },
+    { id: 2, email: "pontus@email.com", name: "Pontus", age: 12 },
+    { id: 3, email: "per@email.com", name: "Per", age: 57 },
 ]
 
 class MockCRUD {
     constructor(data) {
-        this.data = data.map((data, _id) => ({ _id, ...data}))
+        this.data = data.map(({ id, email, name, age }) => {
+            return new Student(id, email, name, age)
+        });
         this.deleted = 0
     }
 
@@ -18,21 +21,21 @@ class MockCRUD {
     };
 
     async getOne(id) {
-        return this.data.find(item => item._id === parseInt(id))
+        return this.data.find(student => student.id === parseInt(id))
     }
 
     async createOne(data) {
         try {
-            const validData = validateStudent(data);
-            const _id = this.data.length + this.deleted
-            this.data.push({ _id, ...validData })
-        } catch(err) {
+            const { email, name, age } = validateStudent(data);
+            const id = this.data.length + this.deleted
+            this.data.push(new Student(id, email, name, age))
+        } catch (err) {
             throw err;
         }
     }
 
     async deleteOne(id) {
-        this.data = this.data.filter(item => item._id !== parseInt(id))
+        this.data = this.data.filter(student => student.id !== parseInt(id))
         this.deleted += 1
     }
 }

@@ -1,6 +1,6 @@
 import { MongoClient } from "mongodb"
 import { validateStudent } from "../usecases/studentuc.js"
-import { studentMongoAdapter, studentIdMongoAdapter } from "../adapters/studentadapter.js"
+import { studentIdMongoAdapter, mongoToStudentAdapter } from "../adapters/studentadapter.js"
 
 class MongoCRUD {
     constructor(db, collection) {
@@ -10,7 +10,8 @@ class MongoCRUD {
 
     async getAll() {
         try {
-            return await this.collection.find({}).toArray()
+            const mongoStudents = await this.collection.find({}).toArray()
+            return mongoStudents.map(mongoToStudentAdapter)
         } catch(err) {
             throw new Error(`${this.collection}.getAll`, err);
         }
@@ -19,7 +20,8 @@ class MongoCRUD {
     async getOne(id) {
         try {
             const mongoId = studentIdMongoAdapter(id);
-            return await this.collection.findOne(mongoId)
+            const mongoStudent = await this.collection.findOne(mongoId)
+            return mongoToStudentAdapter(mongoStudent)
         } catch(err) {
             throw new Error(`${this.collection}.getOne with id: ${id}`, err);
         }
@@ -28,8 +30,7 @@ class MongoCRUD {
     async createOne(data) {
         try {
             const validData = validateStudent(data);
-            const mongoData = studentMongoAdapter(validData)
-            await this.collection.insertOne(mongoData)
+            await this.collection.insertOne(validData)
         } catch(err) {
             throw new Error(`${this.collection}.createOne`, err);
         }

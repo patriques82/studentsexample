@@ -9,10 +9,10 @@ describe('/students endpoints', () => {
         const res = await request(app).get('/students')
         expect(res.statusCode).toBe(200)
         expect(res.body).toEqual(expect.arrayContaining([
-            { _id: 0, email: "patrik@email.com", name: "Patrik", age: 38 },
-            { _id: 1, email: "petter@email.com", name: "Petter", age: 41 },
-            { _id: 2, email: "pontus@email.com", name: "Pontus", age: 12 },
-            { _id: 3, email: "per@email.com", name: "Per", age: 57 }
+            { id: 0, email: "patrik@email.com", name: "Patrik", age: 38 },
+            { id: 1, email: "petter@email.com", name: "Petter", age: 41 },
+            { id: 2, email: "pontus@email.com", name: "Pontus", age: 12 },
+            { id: 3, email: "per@email.com", name: "Per", age: 57 }
         ]));
     })
 
@@ -21,7 +21,7 @@ describe('/students endpoints', () => {
         const app = await webDriver(mockDb)
         const res = await request(app).get('/students/3')
         expect(res.statusCode).toBe(200)
-        expect(res.body).toMatchObject({ _id: 3, email: "per@email.com", name: "Per", age: 57 })
+        expect(res.body).toMatchObject({ id: 3, email: "per@email.com", name: "Per", age: 57 })
     })
 
     it('POST /students should create 1 student', async () => {
