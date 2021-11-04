@@ -1,3 +1,10 @@
+const mockData = [
+    {name: "Patrik", age: 38},
+    {name: "Petter", age: 41},
+    {name: "Pontus", age: 12},
+    {name: "Per", age: 57},
+]
+
 class MockCRUD {
     constructor(data) {
         this.data = data.map((data, _id) => ({ _id, ...data}))
@@ -23,4 +30,12 @@ class MockCRUD {
     }
 }
 
-export { MockCRUD }
+const createMockDb = (mockData) => {
+    return new MockCRUD(mockData)
+}
+
+const mockdbDriver = () => {
+    return createMockDb(mockdata);
+}
+
+export { mockdbDriver, createMockDb };

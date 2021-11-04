@@ -1,3 +1,5 @@
+import { MongoClient } from "mongodb"
+
 class MongoCRUD {
     constructor(db, collection) {
         this.db = db;
@@ -38,4 +40,16 @@ class MongoCRUD {
     }
 }
 
-export { MongoCRUD }
+
+const createMongoDb = async (conn, name) => {
+    const client = await MongoClient.connect(conn)
+    const db = client.db(name);
+    console.log("Connected successfully with MongoDb", conn, name)
+    return new MongoCRUD(db, "students");
+}
+
+const mongoDriver = async (conn, name) => {
+    return await createMongoDb(conn, name);
+}
+
+export { mongoDriver };

@@ -1,6 +1,6 @@
 import request from "supertest"
-import createApp from "../app.js"
-import { createMockDb } from "../storage/db.js"
+import webDriver from "../drivers/webdriver"
+import { createMockDb } from "../drivers/mockdbdriver"
 
 const mockData = [
     {name: "Patrik", age: 38},
@@ -12,7 +12,7 @@ const mockData = [
 describe('/students endpoints', () => {
     it('GET /students should get 4 students', async () => {
         const mockDb = createMockDb(mockData)
-        const app = await createApp(mockDb)
+        const app = await webDriver(mockDb)
         const res = await request(app).get('/students')
         expect(res.statusCode).toBe(200)
         expect(res.body).toEqual(expect.arrayContaining([
@@ -25,7 +25,7 @@ describe('/students endpoints', () => {
 
     it('GET /students/3 should get 1 student', async () => {
         const mockDb = createMockDb(mockData)
-        const app = await createApp(mockDb)
+        const app = await webDriver(mockDb)
         const res = await request(app).get('/students/3')
         expect(res.statusCode).toBe(200)
         expect(res.body).toMatchObject({ _id: 3, name: "Per", age: 57})
@@ -33,7 +33,7 @@ describe('/students endpoints', () => {
 
     it('POST /students should create 1 student', async () => {
         const mockDb = createMockDb(mockData)
-        const app = await createApp(mockDb)
+        const app = await webDriver(mockDb)
         const res = await request(app)
             .post('/students')
             .send({ name: "Penny", age: 32 })
@@ -43,7 +43,7 @@ describe('/students endpoints', () => {
 
     it('DELETE /students should delete 1 student', async () => {
         const mockDb = createMockDb(mockData)
-        const app = await createApp(mockDb)
+        const app = await webDriver(mockDb)
         const res = await request(app).delete('/students/3')
         expect(res.statusCode).toBe(200)
         expect(res.body).toMatchObject({ deleted: true })

@@ -1,4 +1,4 @@
-import { createMockDb } from "../storage/db.js"
+import { createMockDb } from "../drivers/mockdbdriver"
 
 const mockData = [
     { name: "Patrik", age: 38 },

@@ -1,8 +1,8 @@
-import express from "express"
+import express from "express";
 
 const SERVER_ERROR = "Server Error"
 
-const createApp = async (db) => {
+const expressDriver = (db) => {
     const app = express()
     app.use(express.urlencoded({ extended: true }));
     app.use(express.json());
@@ -53,4 +53,4 @@ const createApp = async (db) => {
     return app;
 }
 
-export default createApp;
+export default expressDriver;
