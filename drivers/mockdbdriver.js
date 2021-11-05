@@ -1,5 +1,5 @@
 import { validateStudent } from "../usecases/validatestudent.js"
-import Student from "../entities/student"
+import Student from "../entities/student.js"
 
 const mockData = [
     { id: 0, email: "patrik@email.com", name: "Patrik", age: 38 },

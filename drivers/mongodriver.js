@@ -29,10 +29,10 @@ class MongoCRUD {
 
     async createOne(data) {
         try {
-            const validData = validateStudent(data);
-            await this.collection.insertOne(validData)
+            const { email, name, age } = validateStudent(data);
+            await this.collection.insertOne({ email, name, age })
         } catch(err) {
-            throw new Error(`${this.collection}.createOne`, err);
+            throw err;
         }
     }
 
