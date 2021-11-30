@@ -3,7 +3,7 @@ import webDriver from "../drivers/webdriver"
 import { mockData, createMockDb } from "../drivers/mockdbdriver"
 
 describe('/students endpoints', () => {
-   /* it('GET /students should get 4 students', async () => {
+   it('GET /students should get 4 students', async () => {
         const mockDb = createMockDb(mockData)
         const app = await webDriver(mockDb)
         const res = await request(app).get('/students')
@@ -15,8 +15,6 @@ describe('/students endpoints', () => {
             { id: 3, email: "per@email.com", name: "Per", age: 57 }
         ]));
     })
-
-    */
 
     it('GET /students/3 should get 1 student', async () => {
         const mockDb = createMockDb(mockData)

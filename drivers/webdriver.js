@@ -11,7 +11,7 @@ const expressDriver = (db) => {
     app.get('/students', async (req, res) => {
         try {
             const students = await db.getAll()
-            res.send("Hello .NET students")
+            res.send(students)
         } catch (err) {
             console.error("Error GET /students", err)
             res.status(501).send(SERVER_ERROR)
