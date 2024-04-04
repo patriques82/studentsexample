@@ -13,7 +13,7 @@ describe("/students endpoints", () => {
         { id: 0, email: "patrik@email.com", name: "Patrik", age: 38 },
         { id: 1, email: "petter@email.com", name: "Petter", age: 41 },
         { id: 2, email: "pontus@email.com", name: "Pontus", age: 12 },
-        { id: 3, email: "perry@email.com", name: "Per", age: 57 },
+        { id: 3, email: "per@email.com", name: "Per", age: 57 },
       ])
     );
   });
