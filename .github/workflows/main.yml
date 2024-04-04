@@ -16,16 +16,10 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v1
         with:
-          node-version: '14.x'
+          node-version: "14.x"
 
       - name: install dependencies
         run: npm install
 
       - name: test
         run: npm run test
-
-      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "safe-sea-97297"
-          heroku_email: "patriknygren82@gmail.com"
